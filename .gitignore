@@ -1,0 +1,9 @@
+# API keys
+.env
+*.key
+
+# Outputs
+transcripts/
+__pycache__/
+*.pyc
+.DS_Store
