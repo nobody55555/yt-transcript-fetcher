@@ -19,10 +19,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install dependencies + Dev-Tools
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install black ruff safety
 
       - name: Run Black (Code Formatting)
         run: black --check .
@@ -32,14 +33,14 @@ jobs:
 
       - name: Gitleaks (Secret Scan)
         uses: gitleaks/gitleaks-action@v2
-        continue-on-error: true   # ← WICHTIG: verhindert Abbruch
+        continue-on-error: true
 
       - name: Safety (Dependency Vulnerability Scan)
-        run: safety check --full-report || true   # ← verhindert Abbruch
+        run: safety check --full-report || true
         continue-on-error: true
 
       - name: Python Syntax Check
-        run: python -m pycompile $(find . -name "*.py" -not -path "./.venv/*")
+        run: python -m pycompile $(find . -name "*.py" -not -path "./.venv/*" -not -path "./venv/*")
 
       - name: Summary
-        run: echo "✅ CI Pipeline erfolgreich durchgelaufen (mit toleranten Security-Scans)"
+        run: echo "✅ CI Pipeline erfolgreich durchgelaufen"
