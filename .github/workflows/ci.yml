@@ -41,7 +41,7 @@ jobs:
         continue-on-error: true
 
       - name: Python Syntax Check
-        run: python -m pycompile $(find . -name "*.py" -not -path "./.venv/*" -not -path "./venv/*")
+        run: python -m compileall -q .   # korrekter, zuverlässiger Syntax-Check
 
       - name: Summary
-        run: echo "✅ CI Pipeline erfolgreich durchgelaufen (Black ist nur noch Hinweis)"
+        run: echo "✅ CI Pipeline erfolgreich durchgelaufen (Black ist nur Hinweis)"
